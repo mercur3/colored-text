@@ -1,3 +1,4 @@
+/// An `enum` that represents 8 possible colors that can be displayed in terminal
 pub enum Color {
 	Black  = 30,
 	Red    = 31,
@@ -9,6 +10,7 @@ pub enum Color {
 	White  = 37,
 }
 
+/// An `enum` that represents the possible style a text can be displayed in terminal
 pub enum Style {
 	Normal        = 0,
 	Bold          = 1,

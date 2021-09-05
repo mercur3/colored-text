@@ -11,7 +11,7 @@ pub enum Color {
 
 pub enum Style {
 	Reset = 0,
-	Light = 1,
+	Bold = 1,
 	Dark = 2,
 	Italic = 3,
 	Underline = 4,

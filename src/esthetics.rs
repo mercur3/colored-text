@@ -10,7 +10,7 @@ pub enum Color {
 }
 
 pub enum Style {
-	Reset = 0,
+	Normal = 0,
 	Bold = 1,
 	Dark = 2,
 	Italic = 3,
@@ -18,6 +18,6 @@ pub enum Style {
 	BlinkSlow = 5,
 	BlinkFast = 6,
 	Reverse = 7,
-	Hiden = 8,
+	Hidden = 8,
 	Strikethrough = 9,
 }

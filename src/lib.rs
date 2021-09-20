@@ -31,6 +31,38 @@ impl ColoredString<'_> {
 			color: (color as i32).to_string(),
 		};
 	}
+
+	/// Creates a new [ColoredString] with a specific color, but style set to
+	/// `esthetics::Style::Normal`
+	///
+	/// ```rust
+	/// use colored_text::{esthetics, ColoredString};
+	///
+	/// let text = "abc";
+	/// let blue1 = ColoredString::with_color(text, esthetics::Color::Blue);
+	/// let blue2 = ColoredString::new(text, esthetics::Style::Normal, esthetics::Color::Blue);
+	///
+	/// assert_eq!(println!("{}", blue1), println!("{}", blue2));
+	/// ```
+	pub fn with_color(text: &str, color: esthetics::Color) -> ColoredString {
+		return ColoredString::new(text, esthetics::Style::Normal, color);
+	}
+
+	/// Creates a new [ColoredString] with a specific style, but color set to
+	/// `esthetics::Color::White`
+	///
+	/// ```rust
+	/// use colored_text::{esthetics, ColoredString};
+	///
+	/// let text = "abc";
+	/// let bold1 = ColoredString::with_style(text, esthetics::Style::Bold);
+	/// let bold2 = ColoredString::new(text, esthetics::Style::Bold, esthetics::Color::Blue);
+	///
+	/// assert_eq!(println!("{}", bold1), println!("{}", bold2));
+	/// ```
+	pub fn with_style(text: &str, style: esthetics::Style) -> ColoredString {
+		return ColoredString::new(text, style, esthetics::Color::White);
+	}
 }
 
 impl Display for ColoredString<'_> {

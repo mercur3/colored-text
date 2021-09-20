@@ -42,7 +42,7 @@ impl ColoredString<'_> {
 	/// let blue1 = ColoredString::with_color(text, esthetics::Color::Blue);
 	/// let blue2 = ColoredString::new(text, esthetics::Style::Normal, esthetics::Color::Blue);
 	///
-	/// assert_eq!(println!("{}", blue1), println!("{}", blue2));
+	/// assert_eq!(format!("{}", blue1), format!("{}", blue2));
 	/// ```
 	pub fn with_color(text: &str, color: esthetics::Color) -> ColoredString {
 		return ColoredString::new(text, esthetics::Style::Normal, color);
@@ -56,9 +56,9 @@ impl ColoredString<'_> {
 	///
 	/// let text = "abc";
 	/// let bold1 = ColoredString::with_style(text, esthetics::Style::Bold);
-	/// let bold2 = ColoredString::new(text, esthetics::Style::Bold, esthetics::Color::Blue);
+	/// let bold2 = ColoredString::new(text, esthetics::Style::Bold, esthetics::Color::White);
 	///
-	/// assert_eq!(println!("{}", bold1), println!("{}", bold2));
+	/// assert_eq!(format!("{}", bold1), format!("{}", bold2));
 	/// ```
 	pub fn with_style(text: &str, style: esthetics::Style) -> ColoredString {
 		return ColoredString::new(text, style, esthetics::Color::White);
@@ -81,7 +81,8 @@ impl Display for ColoredString<'_> {
 	/// 	esthetics::Color::White,
 	/// );
 	/// ```
-	/// The code above will not display the string abc with a normal style, but because of the injection it will be displayed with red font and strikethrough style
+	/// The code above will not display the string abc with a normal style, but because of the
+	/// injection it will be displayed with red font and strikethrough style
 	fn fmt(&self, f: &mut Formatter) -> Result {
 		const CLEAR: &str = "\x1b[0m";
 

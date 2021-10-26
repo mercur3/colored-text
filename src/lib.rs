@@ -2,9 +2,9 @@
 //!
 //! # Examples
 //! ```rust
-//! use colored_text::{esthetics, ColoredString};
+//! use colored_text::{esthetics, ColoredText};
 //!
-//! let x = ColoredString::new(
+//! let x = ColoredText::new(
 //! 	"Hello, World",
 //! 	esthetics::Style::Underline,
 //! 	esthetics::Color::Cyan,
@@ -17,52 +17,52 @@ use std::fmt::{Display, Formatter, Result};
 pub mod esthetics;
 
 #[derive(Default, PartialEq, Eq, Debug)]
-pub struct ColoredString<'a> {
+pub struct ColoredText<'a> {
 	text: &'a str,
 	style: esthetics::Style,
 	color: esthetics::Color,
 }
 
-impl ColoredString<'_> {
-	/// Creates a new [ColoredString] object with the following text, style and color
-	pub fn new(text: &str, style: esthetics::Style, color: esthetics::Color) -> ColoredString {
-		return ColoredString { text, style, color };
+impl ColoredText<'_> {
+	/// Creates a new [ColoredText] object with the following text, style and color
+	pub fn new(text: &str, style: esthetics::Style, color: esthetics::Color) -> ColoredText {
+		return ColoredText { text, style, color };
 	}
 
-	/// Creates a new [ColoredString] with a specific color, but style set to
+	/// Creates a new [ColoredText] with a specific color, but style set to
 	/// `esthetics::Style::Normal`
 	///
 	/// ```rust
-	/// use colored_text::{esthetics, ColoredString};
+	/// use colored_text::{esthetics, ColoredText};
 	///
 	/// let text = "abc";
-	/// let blue1 = ColoredString::with_color(text, esthetics::Color::Blue);
-	/// let blue2 = ColoredString::new(text, esthetics::Style::Normal, esthetics::Color::Blue);
+	/// let blue1 = ColoredText::with_color(text, esthetics::Color::Blue);
+	/// let blue2 = ColoredText::new(text, esthetics::Style::Normal, esthetics::Color::Blue);
 	///
 	/// assert_eq!(format!("{}", blue1), format!("{}", blue2));
 	/// ```
-	pub fn with_color(text: &str, color: esthetics::Color) -> ColoredString {
-		return ColoredString::new(text, esthetics::Style::Normal, color);
+	pub fn with_color(text: &str, color: esthetics::Color) -> ColoredText {
+		return ColoredText::new(text, esthetics::Style::Normal, color);
 	}
 
-	/// Creates a new [ColoredString] with a specific style, but color set to
+	/// Creates a new [ColoredText] with a specific style, but color set to
 	/// `esthetics::Color::White`
 	///
 	/// ```rust
-	/// use colored_text::{esthetics, ColoredString};
+	/// use colored_text::{esthetics, ColoredText};
 	///
 	/// let text = "abc";
-	/// let bold1 = ColoredString::with_style(text, esthetics::Style::Bold);
-	/// let bold2 = ColoredString::new(text, esthetics::Style::Bold, esthetics::Color::White);
+	/// let bold1 = ColoredText::with_style(text, esthetics::Style::Bold);
+	/// let bold2 = ColoredText::new(text, esthetics::Style::Bold, esthetics::Color::White);
 	///
 	/// assert_eq!(format!("{}", bold1), format!("{}", bold2));
 	/// ```
-	pub fn with_style(text: &str, style: esthetics::Style) -> ColoredString {
-		return ColoredString::new(text, style, esthetics::Color::White);
+	pub fn with_style(text: &str, style: esthetics::Style) -> ColoredText {
+		return ColoredText::new(text, style, esthetics::Color::White);
 	}
 }
 
-impl Display for ColoredString<'_> {
+impl Display for ColoredText<'_> {
 	/// Formats this instace after the following pattern:
 	/// `{style}{text}{CLEAR}`
 	/// making sure `stdin` will not be corrupted by printing this object
@@ -70,9 +70,9 @@ impl Display for ColoredString<'_> {
 	/// # Note
 	/// The API is not tolerant to string injection.
 	/// ```rust
-	/// use colored_text::{esthetics, ColoredString};
+	/// use colored_text::{esthetics, ColoredText};
 	///
-	/// let c = ColoredString::new(
+	/// let c = ColoredText::new(
 	/// 	"\x1b[9;31mabc",
 	/// 	esthetics::Style::Normal,
 	/// 	esthetics::Color::White,
@@ -105,9 +105,9 @@ mod test {
 
 	#[test]
 	fn default_works() {
-		let x = ColoredString::default();
+		let x = ColoredText::default();
 		let string_default = "";
-		let y = ColoredString::new(
+		let y = ColoredText::new(
 			string_default,
 			esthetics::Style::Normal,
 			esthetics::Color::White,

@@ -2,7 +2,8 @@
 name = "colored-text"
 version = "0.1.0"
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+authors = ["Andri Reveli <reveliandri@gmail.com>"]
+description = "A simple 0-dependecies rust library for printing colored text on a UNIX terminal"
+readme = "README.org"
+repository = "https://gitlab.com/andriR/colored-text"
+license-file = "LICENSE"

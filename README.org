@@ -6,11 +6,10 @@ A lightweight library for printing colored text on an UNIX terminal environment.
 #+begin_src rust
 use colored_text::{esthetics, ColoredString};
 
-let x = ColoredString::new(
-    "Hello, World",
-    esthetics::Style::Underline,    // define underline style
-    esthetics::Color::Cyan,         // use cyan color
-);
+let x = ColoredString::text("Hello, World")
+    .style(esthetics::Style::Underline)     // define underline style
+    .color(esthetics::Color::Cyan);         // use cyan color
+
 println!("{}", x);
 #+end_src
 
@@ -19,9 +18,7 @@ It is possible to inject a string that will produce non desirable behaviour.
 #+begin_src rust
 use colored_text::{esthetics, ColoredString};
 
-let c = ColoredString::new(
-    "\x1b[9;31mabc",            // overwrites esthetics::Style:Normal and esthetics::Color::White
-    esthetics::Style::Normal,
-    esthetics::Color::White,
-);
+let c = ColoredString::text("\x1b[9;31mabc")    // overwrites esthetics::Style:Normal and esthetics::Color::White
+    .style(esthetics::Style::Normal)
+    .color(esthetics::Color::White);
 #+end_src

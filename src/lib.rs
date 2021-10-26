@@ -4,16 +4,16 @@
 //! ```rust
 //! use colored_text::{esthetics, ColoredText};
 //!
-//! let x = ColoredText::new(
-//! 	"Hello, World",
-//! 	esthetics::Style::Underline,
-//! 	esthetics::Color::Cyan,
-//! );
+//! let x = ColoredText::text("Hello, World!")
+//! 	.style(esthetics::Style::Underline)
+//! 	.color(esthetics::Color::Cyan);
+//!
 //! println!("{}", x);
 //! ```
 //! Will print in the terminal "Hello World" (without "") with cyan color and underlined
 
 use std::fmt::{Display, Formatter, Result};
+
 pub mod esthetics;
 
 #[derive(Default, PartialEq, Eq, Debug)]
@@ -23,42 +23,41 @@ pub struct ColoredText<'a> {
 	color: esthetics::Color,
 }
 
-impl ColoredText<'_> {
-	/// Creates a new [ColoredText] object with the following text, style and color
-	pub fn new(text: &str, style: esthetics::Style, color: esthetics::Color) -> ColoredText {
-		return ColoredText { text, style, color };
+impl<'a> ColoredText<'a> {
+	/// Creates a new [ColoredText] object with the base text
+	pub fn text(text: &'a str) -> ColoredText {
+		return ColoredText {
+			text,
+			..Default::default()
+		};
 	}
 
-	/// Creates a new [ColoredText] with a specific color, but style set to
-	/// `esthetics::Style::Normal`
+	/// Creates a new [ColoredText] from an existing one, with a specific color
 	///
 	/// ```rust
 	/// use colored_text::{esthetics, ColoredText};
 	///
 	/// let text = "abc";
-	/// let blue1 = ColoredText::with_color(text, esthetics::Color::Blue);
-	/// let blue2 = ColoredText::new(text, esthetics::Style::Normal, esthetics::Color::Blue);
+	/// let blue = ColoredText::text(text).color(esthetics::Color::Blue);
 	///
-	/// assert_eq!(format!("{}", blue1), format!("{}", blue2));
+	/// assert_eq!(format!("{}", blue), format!("\x1b[0;34m{}\x1b[0m", text));
 	/// ```
-	pub fn with_color(text: &str, color: esthetics::Color) -> ColoredText {
-		return ColoredText::new(text, esthetics::Style::Normal, color);
+	pub fn color(self, color: esthetics::Color) -> ColoredText<'a> {
+		return ColoredText { color, ..self };
 	}
 
-	/// Creates a new [ColoredText] with a specific style, but color set to
-	/// `esthetics::Color::White`
+	/// Creates a new [ColoredText] from an existing one, with a specific style
 	///
 	/// ```rust
 	/// use colored_text::{esthetics, ColoredText};
 	///
 	/// let text = "abc";
-	/// let bold1 = ColoredText::with_style(text, esthetics::Style::Bold);
-	/// let bold2 = ColoredText::new(text, esthetics::Style::Bold, esthetics::Color::White);
+	/// let bold = ColoredText::text(text).style(esthetics::Style::Bold);
 	///
-	/// assert_eq!(format!("{}", bold1), format!("{}", bold2));
+	/// assert_eq!(format!("{}", bold), format!("\x1b[1;37m{}\x1b[0m", text));
 	/// ```
-	pub fn with_style(text: &str, style: esthetics::Style) -> ColoredText {
-		return ColoredText::new(text, style, esthetics::Color::White);
+	pub fn style(self, style: esthetics::Style) -> ColoredText<'a> {
+		return ColoredText { style, ..self };
 	}
 }
 
@@ -68,18 +67,7 @@ impl Display for ColoredText<'_> {
 	/// making sure `stdin` will not be corrupted by printing this object
 	///
 	/// # Note
-	/// The API is not tolerant to string injection.
-	/// ```rust
-	/// use colored_text::{esthetics, ColoredText};
-	///
-	/// let c = ColoredText::new(
-	/// 	"\x1b[9;31mabc",
-	/// 	esthetics::Style::Normal,
-	/// 	esthetics::Color::White,
-	/// );
-	/// ```
-	/// The code above will not display the string abc with a normal style, but because of the
-	/// injection it will be displayed with red font and strikethrough style
+	/// The API intolerant to string injection.
 	fn fmt(&self, f: &mut Formatter) -> Result {
 		const CLEAR: &str = "\x1b[0m";
 
@@ -107,11 +95,11 @@ mod test {
 	fn default_works() {
 		let x = ColoredText::default();
 		let string_default = "";
-		let y = ColoredText::new(
-			string_default,
-			esthetics::Style::Normal,
-			esthetics::Color::White,
-		);
+		let y = ColoredText {
+			text: string_default,
+			style: esthetics::Style::Normal,
+			color: esthetics::Color::White,
+		};
 
 		assert!(x.eq(&y));
 		assert!(y.eq(&x));

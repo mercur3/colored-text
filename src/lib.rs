@@ -16,20 +16,17 @@
 use std::fmt::{Display, Formatter, Result};
 pub mod esthetics;
 
+#[derive(Default, PartialEq, Eq, Debug)]
 pub struct ColoredString<'a> {
 	text: &'a str,
-	style: String,
-	color: String,
+	style: esthetics::Style,
+	color: esthetics::Color,
 }
 
 impl ColoredString<'_> {
 	/// Creates a new [ColoredString] object with the following text, style and color
 	pub fn new(text: &str, style: esthetics::Style, color: esthetics::Color) -> ColoredString {
-		return ColoredString {
-			text,
-			style: (style as i32).to_string(),
-			color: (color as i32).to_string(),
-		};
+		return ColoredString { text, style, color };
 	}
 
 	/// Creates a new [ColoredString] with a specific color, but style set to
@@ -87,9 +84,9 @@ impl Display for ColoredString<'_> {
 		const CLEAR: &str = "\x1b[0m";
 
 		let mut display = String::from("\x1b[");
-		display.push_str(&self.style);
+		display.push_str(&(self.style.clone() as i32).to_string());
 		display.push(';');
-		display.push_str(&self.color);
+		display.push_str(&(self.color.clone() as i32).to_string());
 		display.push('m');
 
 		return write!(
@@ -99,5 +96,24 @@ impl Display for ColoredString<'_> {
 			text = self.text,
 			clear = CLEAR
 		);
+	}
+}
+
+#[cfg(test)]
+mod test {
+	use super::*;
+
+	#[test]
+	fn default_works() {
+		let x = ColoredString::default();
+		let string_default = "";
+		let y = ColoredString::new(
+			string_default,
+			esthetics::Style::Normal,
+			esthetics::Color::White,
+		);
+
+		assert!(x.eq(&y));
+		assert!(y.eq(&x));
 	}
 }

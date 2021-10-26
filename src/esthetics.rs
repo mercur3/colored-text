@@ -1,5 +1,5 @@
 /// An `enum` that represents the possible style a text can be displayed in terminal
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq, Debug)]
 pub enum Style {
 	Normal        = 0,
 	Bold          = 1,
@@ -20,7 +20,7 @@ impl Default for Style {
 }
 
 /// An `enum` that represents 8 possible colors that can be displayed in terminal
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq, Debug)]
 pub enum Color {
 	Black  = 30,
 	Red    = 31,
@@ -37,7 +37,6 @@ impl Default for Color {
 		return Color::White;
 	}
 }
-
 
 #[cfg(test)]
 mod test {

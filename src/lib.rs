@@ -42,8 +42,9 @@ impl<'a> ColoredText<'a> {
 	///
 	/// assert_eq!(format!("{}", blue), format!("\x1b[0;34m{}\x1b[0m", text));
 	/// ```
-	pub fn color(self, color: esthetics::Color) -> ColoredText<'a> {
-		return ColoredText { color, ..self };
+	pub fn color(mut self, color: esthetics::Color) -> ColoredText<'a> {
+		self.color = color;
+		return self;
 	}
 
 	/// Creates a new [ColoredText] from an existing one, with a specific style
@@ -56,8 +57,9 @@ impl<'a> ColoredText<'a> {
 	///
 	/// assert_eq!(format!("{}", bold), format!("\x1b[1;37m{}\x1b[0m", text));
 	/// ```
-	pub fn style(self, style: esthetics::Style) -> ColoredText<'a> {
-		return ColoredText { style, ..self };
+	pub fn style(mut self, style: esthetics::Style) -> ColoredText<'a> {
+		self.style = style;
+		return self;
 	}
 }
 

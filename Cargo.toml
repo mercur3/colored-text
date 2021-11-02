@@ -1,6 +1,6 @@
 [package]
 name = "colored-text"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2018"
 authors = ["Andri Reveli <reveliandri@gmail.com>"]
 description = "A simple 0-dependecies rust library for printing colored text on a UNIX terminal"
